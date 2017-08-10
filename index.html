@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 600px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+        var delta = 0.001;
+        var zero = {lat: 48.644023, lng: 35.252322};
+        var beginText = {lat: 48.640970, lng: 35.237884};
+        var locations = [ [0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],
+                          [1,5],
+                          [2,4],
+                          [3,3],
+                          [4,0],[4,1],[4,2],[4,3],[4,4],[4,5],[4,6],
+                          [6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],
+                          [7,5],
+                          [8,4],[8,3],
+                          [9,5],
+                          [10,0],[10,1],[10,2],[10,3],[10,4],[10,5],[10,6],
+                          [12,1],[12,4],[12,5],
+                          [13,0],[13,3],[13,6],
+                          [14,0],[14,3],[14,6],
+                          [15,0],[15,3],[15,6],
+                          [16,1],[16,2],[16,5],
+                          [18,0],[18,1],[18,2],[18,3],[18,4],[18,5],[18,6],
+                          [19,3],
+                          [20,2],[20,4],
+                          [21,1],[21,5],
+                          [22,0],[22,6]
+                        ];
+      function createDelta(delt){
+          koor = {};
+          koor['lat'] = beginText['lat'] + delt[1] * delta;
+          koor['lng'] = beginText['lng'] + delt[0] * delta;
+          return koor;
+      }
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: zero
+        });
+        var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position: createDelta(location),
+            label: 'A',
+            map: map
+          });
+        });
+      }
+   
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCB00b39uhJ2MIK3oW8Ku_28x36_5OlaLQ&callback=initMap">
+    </script>
+  </body>
+</html>
