@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ABC</title>
+        <style>
+            .num {
+                text-align: right;
+            }
+            .wrapper {
+                text-align: center;
+            }
+            .text {
+                font-size: 12em;
+                color: crimson;
+                text-transform: uppercase;
+            }
+
+            @keyframes wrong {
+                from, to, 30%, 60% {
+                    margin-left: 0;
+                }
+
+                15%, 45%, 75% {
+                    margin-left: 0.5em;
+                }
+            }
+
+            @keyframes good {
+                from {
+                    font-size: 12em;
+                }
+                15% {
+                    font-size: 14em;
+                }
+                to {
+                    font-size: 110%;
+                }
+            }
+
+            .b-wrong {
+                animation: wrong 1s;
+            }
+
+            .b-good {
+                animation: good 1s;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="num" class="num"></div>
+        <div class="wrapper">
+            <div id="t0" class="text">text</div>
+            <div id="t1" class="text">text</div>
+            <div id="t2" class="text">text</div>
+            <div id="t3" class="text">text</div>
+        </div>
+        <script>
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
+
+                    // поменять элементы местами
+                    // мы используем для этого синтаксис "деструктурирующее присваивание"
+                    // подробнее о нём - в следующих главах
+                    // то же самое можно записать как:
+                    // let t = array[i]; array[i] = array[j]; array[j] = t
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+            var obj = {
+                words: ['text1', 'text2', 'text3', 'text4', 'text5', 'text6'],
+                curWordIndex: 0,
+                text: [],
+                num: null,
+                curIndex: 0,
+                fRnd: (min, max) => {
+                    min = Math.ceil(0);
+                    max = Math.floor(4);
+                    return Math.floor(Math.random() * (max - min)) + min;
+                },
+                fRefresh: () => {
+                    obj.curIndex = obj.fRnd(0, 4);
+                    obj.setNum();
+                },
+                fInit: () => {
+                    shuffle(obj.words);
+                    obj.text[0] = document.getElementById("t0");
+                    obj.text[1] = document.getElementById("t1");
+                    obj.text[2] = document.getElementById("t2");
+                    obj.text[3] = document.getElementById("t3");
+                    obj.num = document.getElementById("num");
+
+                    obj.fRefresh();
+                    for (var i = 0; i <=3; i++) {
+                        obj.text[i].addEventListener('click', obj.fListener.bind(obj.text[i]));
+                        obj.fSetWord(i);
+                    }
+                },
+                fSetWord: (id) => {
+                    obj.text[id].innerHTML = obj.words[obj.curWordIndex];
+                    if (obj.curWordIndex < obj.words.length - 1) {
+                        obj.curWordIndex++;
+                    } else {
+                        obj.curWordIndex = 0;
+                    }
+                },
+                setNum: () => {
+                    obj.num.innerHTML = obj.curIndex + 1;
+                },
+                fListener: function() {
+                   if (this.id == 't' + obj.curIndex) {
+                        this.classList.add('b-good');
+                        setTimeout(() => {
+                            obj.fSetWord(obj.curIndex);
+                            obj.fRefresh();
+                        }, 1250);
+                   } else {
+                        this.classList.add('b-wrong');
+                   }
+                   setTimeout(() => {
+                        this.classList.remove('b-good');
+                        this.classList.remove('b-wrong');
+                   }, 1200);
+                },
+            }
+
+            obj.fInit();
+        </script>
+    </body>
+</html>
