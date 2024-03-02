@@ -1,36 +1,44 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example Page</title>
+</head>
+<body>
+
+  <!-- Контент страницы -->
+
+  <div id="pop"></div>
+
+  <!-- Внедрение JavaScript-кода -->
   <script>
-    function checkDateTime() {
-  var currentDate = new Date();
-  var currentDay = currentDate.getDay();
-  var currentHour = currentDate.getHours();
+    document.addEventListener("DOMContentLoaded", function () {
+      function checkDateTime() {
+        var currentDate = new Date();
+        var currentDay = currentDate.getDay();
+        var currentHour = currentDate.getHours();
 
-  // Проверка, что сейчас не суббота и не воскресенье
-  if (currentDay !== 0 && currentDay !== 6) {
-    // Проверка, что время между 9:00 и 18:00
-    if (currentHour >= 9 && currentHour < 18) {
-      return true;
-    }
-  }
+        // Проверка, что сейчас не суббота и не воскресенье
+        if (currentDay !== 0 && currentDay !== 6) {
+          // Проверка, что время между 9:00 и 18:00
+          if (currentHour >= 9 && currentHour < 18) {
+            return true;
+          }
+        }
 
-  return false;
-}
+        return false;
+      }
 
-
-  </script>
-  </head>
-  <body>
-    <h2>pop2</h2>
-    <div id="pop"></div>
-    <script>
+      // Пример использования
       var popElement = document.getElementById("pop");
 
-if (checkDateTime()) {
-  popElement.innerHtml = "TRUE";
-} else {
-  popElement.innerHtml = "FALSE";
-}
-    </script>
-  </body>
+      if (checkDateTime()) {
+        popElement.innerText = "TRUE";
+      } else {
+        popElement.innerText = "FALSE";
+      }
+    });
+  </script>
+</body>
 </html>
